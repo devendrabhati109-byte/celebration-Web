@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday ❤️</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0b1020;
+position:relative;
+color:white;
+}
+
+/* Aurora */
+
+body::before{
+content:"";
+position:absolute;
+width:180%;
+height:180%;
+background:
+radial-gradient(circle,#ff4da633,transparent 35%),
+radial-gradient(circle,#4d79ff33,transparent 40%),
+radial-gradient(circle,#00ffcc22,transparent 40%);
+animation:aurora 18s linear infinite;
+filter:blur(80px);
+}
+
+@keyframes aurora{
+
+0%{transform:translate(-15%,-10%) rotate(0deg);}
+50%{transform:translate(10%,10%) rotate(180deg);}
+100%{transform:translate(-15%,-10%) rotate(360deg);}
+}
+
+.card{
+
+position:relative;
+z-index:10;
+width:90%;
+max-width:420px;
+
+padding:30px;
+border-radius:25px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.2);
+
+text-align:center;
+
+box-shadow:0 0 40px rgba(255,255,255,.1);
+
+}
+
+h1{
+
+margin-bottom:20px;
+
+font-size:2rem;
+
+}
+
+.cake{
+
+margin:auto;
+
+position:relative;
+
+width:220px;
+
+height:230px;
+
+}
+
+/* Plate */
+
+.plate{
+
+position:absolute;
+
+bottom:0;
+
+left:20px;
+
+width:180px;
+
+height:18px;
+
+background:#ddd;
+
+border-radius:20px;
+
+}
+
+/* Cake */
+
+.layer{
+
+position:absolute;
+
+left:40px;
+
+border-radius:12px;
+
+}
+
+.bottom{
+
+bottom:18px;
+
+width:140px;
+
+height:70px;
+
+background:#ff9ec4;
+
+}
+
+.middle{
+
+bottom:82px;
+
+width:120px;
+
+height:60px;
+
+left:50px;
+
+background:#ffc857;
+
+}
+
+.top{
+
+bottom:138px;
+
+width:100px;
+
+height:45px;
+
+left:60px;
+
+background:#8fd3ff;
+
+}
+
+/* Candles */
+
+.candle{
+
+position:absolute;
+
+width:10px;
+
+height:40px;
+
+background:white;
+
+bottom:183px;
+
+border-radius:3px;
+
+}
+
+.c1{left:78px;}
+.c2{left:104px;}
+.c3{left:130px;}
+
+.flame{
+
+position:absolute;
+
+width:12px;
+
+height:18px;
+
+background:gold;
+
+border-radius:50% 50% 50% 50%;
+
+top:-16px;
+
+left:-1px;
+
+animation:flicker .2s infinite alternate;
+
+box-shadow:0 0 15px gold;
+
+}
+
+@keyframes flicker{
+
+from{
+
+transform:scale(.9);
+
+opacity:.8;
+
+}
+
+to{
+
+transform:scale(1.1);
+
+opacity:1;
+
+}
+
+}
+
+button{
+
+margin-top:20px;
+
+padding:12px 28px;
+
+border:none;
+
+border-radius:30px;
+
+font-size:16px;
+
+cursor:pointer;
+
+background:#ff4d88;
+
+color:white;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+transform:scale(1.08);
+
+}
+
+.message{
+
+margin-top:20px;
+
+font-size:18px;
+
+color:#ffe36d;
+
+min-height:25px;
+
+}
+
+/* Confetti */
+
+.confetti{
+
+position:absolute;
+
+width:8px;
+
+height:16px;
+
+top:-20px;
+
+animation:fall linear forwards;
+
+}
+
+@keyframes fall{
+
+to{
+
+transform:translateY(110vh) rotate(720deg);
+
+}
+
+}
+
+@media(max-width:480px){
+
+h1{
+
+font-size:1.6rem;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🎂 Happy Birthday! ❤️</h1>
+
+<div class="cake">
+
+<div class="candle c1">
+<div class="flame"></div>
+</div>
+
+<div class="candle c2">
+<div class="flame"></div>
+</div>
+
+<div class="candle c3">
+<div class="flame"></div>
+</div>
+
+<div class="layer top"></div>
+<div class="layer middle"></div>
+<div class="layer bottom"></div>
+
+<div class="plate"></div>
+
+</div>
+
+<button onclick="blowCandles()">
+💨 Blow the Candles
+</button>
+
+<div class="message" id="msg"></div>
+
+</div>
+
+<script>
+
+let blown=false;
+
+function confetti(){
+
+const colors=["#ff4d6d","#ffd60a","#00d4ff","#00f5a0","#ff7b00","#b517ff"];
+
+for(let i=0;i<180;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=colors[Math.floor(Math.random()*colors.length)];
+
+c.style.animationDuration=(2+Math.random()*3)+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>c.remove(),5000);
+
+}
+
+}
+
+function blowCandles(){
+
+if(blown) return;
+
+blown=true;
+
+document.querySelectorAll(".flame").forEach(f=>{
+
+f.style.transition="1s";
+
+f.style.opacity="0";
+
+f.style.transform="translateY(-20px) scale(0)";
+
+});
+
+document.getElementById("msg").innerHTML=
+"🎉 Yay! The candles are blown out!<br>May all your wishes come true ❤️";
+
+confetti();
+
+}
+
+document.addEventListener("keydown",e=>{
+
+if(e.code==="Space"){
+
+blowCandles();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
